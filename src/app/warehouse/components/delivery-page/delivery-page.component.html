@@ -1,0 +1,33 @@
+<app-table
+  title="Przyjmij dostawę"
+  [columns]="columns"
+  [rows]="displayedSnacks"
+  [formGroup]="form"
+  [buttons]="buttons"
+  [min]="0"
+  (actionChosen)="onActionChosen($event)"
+
+>
+</app-table>
+
+<app-modal
+  modalId="modal1"
+  title="Potwierdź dostawę przekąski"
+  noButtonText="Zamknij"
+  yesButtonText="Potwierdź"
+  (callbackCalled)="acceptSnack()"
+  [disabled]="!form.valid"
+>
+  <app-form-input
+    name="Ilość"
+    type="number"
+    [min]="1"
+    [control]="form.controls.amount"
+  ></app-form-input>
+  <app-form-input
+    name="Cena"
+    type="number"
+    [min]="0.01"
+    [control]="form.controls.price"
+  ></app-form-input>
+</app-modal>

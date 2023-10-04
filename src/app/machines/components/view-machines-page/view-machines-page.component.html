@@ -1,0 +1,103 @@
+<app-table
+  title="Lista maszyn"
+  [columns]="machinesListcolumns"
+  [rows]="machines"
+  [buttons]="machinesListButtons"
+  (actionChosen)="onActionChosen($event)"
+  *ngIf="showMachines; else snacks"
+>
+  <app-modal
+    modalId="modal1"
+    title="Edytuj maszynę"
+    noButtonText="Zamknij"
+    yesButtonText="Zapisz"
+    *ngIf="showMachines"
+    (callbackCalled)="onCallbackCalled()"
+    [disabled]="!form.valid"
+  >
+    <app-form-input
+      name="Nowa lokalizacja maszyny"
+      [control]="form.controls.location"
+    ></app-form-input>
+    <app-form-input
+      name="Nowa liczba pozycji"
+      type="number"
+      [min]="1"
+      [control]="form.controls.positionsNumber"
+    ></app-form-input>    <app-form-input
+      name="Nowa pojemność"
+      type="number"
+      [min]="1"
+      [control]="form.controls.positionsCapacity"
+    ></app-form-input>
+  </app-modal>
+
+
+</app-table>
+
+<ng-template #snacks>
+  <app-table
+    title="Lista przekąsek w {{ chosenMachineLocation }}"
+    [columns]="snacksListcolumns"
+    [rows]="snacksInMachineDisplayed"
+    [buttons]="snacksListButtons"
+    [min]="0"
+    (actionChosen)="onSnackToChangePriceChosen($event)"
+  >
+    <app-modal
+            modalId="modal1"
+            title="Zmień cenę przekąski"
+            noButtonText="Zamknij"
+            yesButtonText="Zapisz"
+            *ngIf="!showMachines"
+            [disabled]="!changePriceForm.valid"
+            (callbackCalled)="changePrice()"
+    >
+      <app-form-input
+              name="Nowa cena w tej maszynie"
+              type="number"
+              [min]="1"
+              [control]="changePriceForm.controls.price"
+      ></app-form-input>
+    </app-modal>
+  </app-table>
+
+  <div class="d-flex gap-3 w-75 justify-content-end">
+
+    <div class="me-auto">
+      <app-form-button
+              text="Wróć"
+              btn-style="outline"
+              (click)="goBack()"
+      ></app-form-button>
+    </div>
+
+    <app-form-button
+            text="Dodaj"
+            data-bs-target="#newSnackModal"
+            data-bs-toggle="modal"
+    ></app-form-button>
+  </div>
+</ng-template>
+
+
+<app-modal
+        modalId="newSnackModal"
+        title="Dodaj przekąskę w maszynie"
+        noButtonText="Zamknij"
+        yesButtonText="Dodaj"
+        [disabled]="!addSnackForm.valid"
+        (callbackCalled)="addSnack()"
+>
+  <app-form-select
+          name="Przekąska"
+          [options]="snacksOptions"
+          [control]="addSnackForm.controls.snackId"
+  ></app-form-select>
+  <app-form-input
+        name="Cena w tej maszynie"
+        type="number"
+        [min]="1"
+        [control]="addSnackForm.controls.price"
+></app-form-input></app-modal>
+

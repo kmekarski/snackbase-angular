@@ -1,0 +1,28 @@
+<app-form title="Dodaj maszynę">
+  <app-form-input
+    name="Lokalizacja maszyny"
+    [control]="form.controls.location"
+  ></app-form-input>
+  <app-form-input
+          name="Liczba pozycji"
+          type="number"
+          [min]="1"
+          [control]="form.controls.positionsNumber"
+  ></app-form-input>
+  <app-form-input
+          name="Pojemność"
+          type="number"
+          [min]="1"
+          [control]="form.controls.positionsCapacity"
+  ></app-form-input>
+  <app-form-button
+    text="Dodaj"
+    (click)="onSubmit()"
+    [disabled]="!form.valid"
+  ></app-form-button>
+</app-form>
+
+<app-alert
+  alertId="successAlert"
+  message="Maszyna dodana pomyślnie."
+></app-alert>

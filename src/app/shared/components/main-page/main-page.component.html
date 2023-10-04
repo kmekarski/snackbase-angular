@@ -1,0 +1,5 @@
+<div class="welcome-message">
+  <a routerLink="auth" *ngIf="!isLoggedIn"><h1>Zaloguj się aby rozpocząć!</h1></a>
+  <h1 *ngIf="isLoggedIn">Witaj {{userFullName}}!</h1>
+  <p *ngIf="isLoggedIn">Wybierz opcję z paska nawigacji aby rozpocząć</p>
+</div>
